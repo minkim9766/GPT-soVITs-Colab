@@ -1,15 +1,15 @@
-numpy<2.0
+numpy
+websockets>=15,<16
 scipy
 tensorboard
 librosa
 numba
 pytorch-lightning>=2.4
-gradio<5
 ffmpeg-python
 onnxruntime; platform_machine == "aarch64" or platform_machine == "arm64"
 onnxruntime-gpu; platform_machine == "x86_64" or platform_machine == "AMD64"
 tqdm
-funasr==1.0.27
+funasr
 cn2an
 pypinyin
 pyopenjtalk>=0.4.1
@@ -17,8 +17,8 @@ g2p_en
 torchaudio
 modelscope
 sentencepiece
-transformers>=4.43,<=4.50
-peft<0.18.0
+transformers
+peft
 chardet
 PyYAML
 psutil
@@ -33,10 +33,9 @@ ko_pron
 python_mecab_ko; sys_platform != 'win32'
 fastapi[standard]>=0.115.2
 x_transformers
-torchmetrics<=1.5
-pydantic<=2.10.6
-ctranslate2>=4.0,<5
+torchmetrics
+pydantic>=2.12,<3.0
+ctranslate2
 av>=11
-tqdm
 # opencc
 # opencc-python-reimplemented

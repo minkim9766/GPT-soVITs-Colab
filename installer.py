@@ -15,8 +15,8 @@ if sys.argv[1] == "initial":
     run_command(f"{sys.executable} -m pip install pydub faster-whisper librosa")
     run_command(f"{sys.executable} -m pip install --upgrade pip setuptools wheel gradio")
 
-    from google.colab import runtime
-    runtime.restart()
+    import os
+    os.kill(os.getpid(), 9)
 
 elif sys.argv[1] == "install":
     # 2. Gradio frpc 파일 설정 (Linux 환경용)
