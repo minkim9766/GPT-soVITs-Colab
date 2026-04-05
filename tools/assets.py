@@ -37,14 +37,14 @@ css = """
 
 footer {
     height: 50px !important;           /* 设置页脚高度 */
-    background-color: transparent !important; /* ?�景?�明 */
+    background-color: transparent !important; /* 背景透明 */
     display: flex;
     justify-content: center;           /* 居中对齐 */
-    align-items: center;               /* ?�直居中 */
+    align-items: center;               /* 垂直居中 */
 }
 
 footer * {
-    display: none !important;          /* ?�藏?�?�子?�素 */
+    display: none !important;          /* 隐藏所有子元素 */
 }
 
 """
@@ -57,10 +57,10 @@ top_html = """
             <img src="https://img.shields.io/badge/GitHub-GPT--SoVITS-blue.svg?style=for-the-badge&logo=github" style="width: auto; height: 30px;">
         </a>
         <a href="https://www.yuque.com/baicaigongchang1145haoyuangong/ib3g1e" target="_blank">
-            <img src="https://img.shields.io/badge/简体中???��??�档-blue?style=for-the-badge&logo=googledocs&logoColor=white" style="width: auto; height: 30px;">
+            <img src="https://img.shields.io/badge/简体中文-阅读文档-blue?style=for-the-badge&logo=googledocs&logoColor=white" style="width: auto; height: 30px;">
         </a>
         <a href="https://lj1995-gpt-sovits-proplus.hf.space/" target="_blank">
-            <img src="https://img.shields.io/badge/?�费?�线体验-free_online_demo-yellow.svg?style=for-the-badge&logo=huggingface" style="width: auto; height: 30px;">
+            <img src="https://img.shields.io/badge/免费在线体验-free_online_demo-yellow.svg?style=for-the-badge&logo=huggingface" style="width: auto; height: 30px;">
         </a>
         <a href="https://www.yuque.com/baicaigongchang1145haoyuangong/ib3g1e" target="_blank">
             <img src="https://img.shields.io/badge/English-READ%20DOCS-blue?style=for-the-badge&logo=googledocs&logoColor=white" style="width: auto; height: 30px;">

@@ -27,14 +27,14 @@ def _time_num2str(num_string: str) -> str:
     return result
 
 
-# ?�刻表达�?
+# 时刻表达式
 RE_TIME = re.compile(
     r"([0-1]?[0-9]|2[0-3])"
     r":([0-5][0-9])"
     r"(:([0-5][0-9]))?"
 )
 
-# ?�间?�围，如8:30-12:30
+# 时间范围，如8:30-12:30
 RE_TIME_RANGE = re.compile(
     r"([0-1]?[0-9]|2[0-3])"
     r":([0-5][0-9])"
@@ -65,33 +65,33 @@ def replace_time(match) -> str:
         minute_2 = match.group(7)
         second_2 = match.group(9)
 
-    result = f"{num2str(hour)}??
+    result = f"{num2str(hour)}点"
     if minute.lstrip("0"):
         if int(minute) == 30:
-            result += "??
+            result += "半"
         else:
-            result += f"{_time_num2str(minute)}??
+            result += f"{_time_num2str(minute)}分"
     if second and second.lstrip("0"):
-        result += f"{_time_num2str(second)}�?
+        result += f"{_time_num2str(second)}秒"
 
     if is_range:
-        result += "??
-        result += f"{num2str(hour_2)}??
+        result += "至"
+        result += f"{num2str(hour_2)}点"
         if minute_2.lstrip("0"):
             if int(minute) == 30:
-                result += "??
+                result += "半"
             else:
-                result += f"{_time_num2str(minute_2)}??
+                result += f"{_time_num2str(minute_2)}分"
         if second_2 and second_2.lstrip("0"):
-            result += f"{_time_num2str(second_2)}�?
+            result += f"{_time_num2str(second_2)}秒"
 
     return result
 
 
 RE_DATE = re.compile(
-    r"(\d{4}|\d{2})�?
-    r"((0?[1-9]|1[0-2])???"
-    r"(((0?[1-9])|((1|2)[0-9])|30|31)([?�号]))?"
+    r"(\d{4}|\d{2})年"
+    r"((0?[1-9]|1[0-2])月)?"
+    r"(((0?[1-9])|((1|2)[0-9])|30|31)([日号]))?"
 )
 
 
@@ -107,15 +107,15 @@ def replace_date(match) -> str:
     day = match.group(5)
     result = ""
     if year:
-        result += f"{verbalize_digit(year)}�?
+        result += f"{verbalize_digit(year)}年"
     if month:
-        result += f"{verbalize_cardinal(month)}??
+        result += f"{verbalize_cardinal(month)}月"
     if day:
         result += f"{verbalize_cardinal(day)}{match.group(9)}"
     return result
 
 
-# ??/ ?��?- ?�隔??YY/MM/DD ?��?YY-MM-DD ?�期
+# 用 / 或者 - 分隔的 YY/MM/DD 或者 YY-MM-DD 日期
 RE_DATE2 = re.compile(r"(\d{4})([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])")
 
 
@@ -131,9 +131,9 @@ def replace_date2(match) -> str:
     day = match.group(4)
     result = ""
     if year:
-        result += f"{verbalize_digit(year)}�?
+        result += f"{verbalize_digit(year)}年"
     if month:
-        result += f"{verbalize_cardinal(month)}??
+        result += f"{verbalize_cardinal(month)}月"
     if day:
-        result += f"{verbalize_cardinal(day)}??
+        result += f"{verbalize_cardinal(day)}日"
     return result

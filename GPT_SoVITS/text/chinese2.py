@@ -17,17 +17,17 @@ pinyin_to_symbol_map = {
     for line in open(os.path.join(current_file_path, "opencpop-strict.txt")).readlines()
 }
 
-import jieba
+import jieba_fast
 import logging
 
-jieba.setLogLevel(logging.CRITICAL)
-import jieba.posseg as psg
+jieba_fast.setLogLevel(logging.CRITICAL)
+import jieba_fast.posseg as psg
 
-# is_g2pw_str = os.environ.get("is_g2pw", "True")##默�?开??
+# is_g2pw_str = os.environ.get("is_g2pw", "True")##默认开启
 # is_g2pw = False#True if is_g2pw_str.lower() == 'true' else False
 is_g2pw = True  # True if is_g2pw_str.lower() == 'true' else False
 if is_g2pw:
-    # print("当前使用g2pw进行?�音?�理")
+    # print("当前使用g2pw进行拼音推理")
     from text.g2pw import G2PWPinyin, correct_pronunciation
 
     parent_directory = os.path.dirname(current_file_path)
@@ -39,28 +39,28 @@ if is_g2pw:
     )
 
 rep_map = {
-    "�?: ",",
-    "�?: ",",
-    "�?: ",",
-    "??: ".",
-    "�?: "!",
-    "�?: "?",
+    "：": ",",
+    "；": ",",
+    "，": ",",
+    "。": ".",
+    "！": "!",
+    "？": "?",
     "\n": ".",
     "·": ",",
-    "??: ",",
-    "...": "??,
+    "、": ",",
+    "...": "…",
     "$": ".",
     "/": ",",
-    "??: "-",
-    "~": "??,
-    "�?: "??,
+    "—": "-",
+    "~": "…",
+    "～": "…",
 }
 
 tone_modifier = ToneSandhi()
 
 
 def replace_punctuation(text):
-    text = text.replace("??, "??).replace("??, "�?)
+    text = text.replace("嗯", "恩").replace("呣", "母")
     pattern = re.compile("|".join(re.escape(p) for p in rep_map.keys()))
 
     replaced_text = pattern.sub(lambda x: rep_map[x.group()], text)
@@ -90,51 +90,51 @@ def _get_initials_finals(word):
     return initials, finals
 
 
-must_erhua = {"小院??, "?�同??, "?�儿", "?�汉??, "?�欢??, "寻老礼??, "妥妥??, "媳妇??}
+must_erhua = {"小院儿", "胡同儿", "范儿", "老汉儿", "撒欢儿", "寻老礼儿", "妥妥儿", "媳妇儿"}
 not_erhua = {
-    "?�儿",
+    "虐儿",
     "为儿",
-    "?�儿",
-    "?�儿",
-    "?�儿",
-    "?�儿",
-    "?�儿",
-    "一??,
-    "?�儿",
+    "护儿",
+    "瞒儿",
+    "救儿",
+    "替儿",
+    "有儿",
+    "一儿",
+    "我儿",
     "俺儿",
     "妻儿",
-    "?�儿",
-    "?�儿",
+    "拐儿",
+    "聋儿",
     "乞儿",
-    "?�儿",
+    "患儿",
     "幼儿",
     "孤儿",
     "婴儿",
-    "婴幼??,
-    "连体??,
-    "?�瘫??,
-    "流浪??,
-    "体弱??,
-    "混�???,
-    "?�雪??,
-    "?�儿",
+    "婴幼儿",
+    "连体儿",
+    "脑瘫儿",
+    "流浪儿",
+    "体弱儿",
+    "混血儿",
+    "蜜雪儿",
+    "舫儿",
     "祖儿",
     "美儿",
-    "应采??,
-    "??��",
+    "应采儿",
+    "可儿",
     "侄儿",
     "孙儿",
-    "侄孙??,
+    "侄孙儿",
     "女儿",
-    "?�儿",
-    "红�???,
-    "?�儿",
-    "?�儿",
+    "男儿",
+    "红孩儿",
+    "花儿",
+    "虫儿",
     "马儿",
     "鸟儿",
-    "?�儿",
-    "?�儿",
-    "?�儿",
+    "猪儿",
+    "猫儿",
+    "狗儿",
     "少儿",
 }
 
@@ -145,26 +145,26 @@ def _merge_erhua(initials: list[str], finals: list[str], word: str, pos: str) ->
     """
     # fix er1
     for i, phn in enumerate(finals):
-        if i == len(finals) - 1 and word[i] == "?? and phn == "er1":
+        if i == len(finals) - 1 and word[i] == "儿" and phn == "er1":
             finals[i] = "er2"
 
-    # ?�音
+    # 发音
     if word not in must_erhua and (word in not_erhua or pos in {"a", "j", "nr"}):
         return initials, finals
 
-    # "?��? 等情?�直?�返??
+    # "……" 等情况直接返回
     if len(finals) != len(word):
         return initials, finals
 
     assert len(finals) == len(word)
 
-    # 与前一个字?�同??
+    # 与前一个字发同音
     new_initials = []
     new_finals = []
     for i, phn in enumerate(finals):
         if (
             i == len(finals) - 1
-            and word[i] == "??
+            and word[i] == "儿"
             and phn in {"er2", "er5"}
             and word[-2:] not in not_erhua
             and new_finals
@@ -195,7 +195,7 @@ def _g2p(segments):
                     continue
                 sub_initials, sub_finals = _get_initials_finals(word)
                 sub_finals = tone_modifier.modified_tone(word, pos, sub_finals)
-                # ?�化
+                # 儿化
                 sub_initials, sub_finals = _merge_erhua(sub_initials, sub_finals, word, pos)
                 initials.append(sub_initials)
                 finals.append(sub_finals)
@@ -204,7 +204,7 @@ def _g2p(segments):
             finals = sum(finals, [])
             print("pypinyin结果", initials, finals)
         else:
-            # g2pw?�用?�句?�理
+            # g2pw采用整句推理
             pinyins = g2pw.lazy_pinyin(seg, neutral_tone_with_five=True, style=Style.TONE3)
 
             pre_word_length = 0
@@ -219,7 +219,7 @@ def _g2p(segments):
 
                 word_pinyins = pinyins[pre_word_length:now_word_length]
 
-                # 多音字消�?
+                # 多音字消歧
                 word_pinyins = correct_pronunciation(word, word_pinyins)
 
                 for pinyin in word_pinyins:
@@ -232,7 +232,7 @@ def _g2p(segments):
 
                 pre_word_length = now_word_length
                 sub_finals = tone_modifier.modified_tone(word, pos, sub_finals)
-                # ?�化
+                # 儿化
                 sub_initials, sub_finals = _merge_erhua(sub_initials, sub_finals, word, pos)
                 initials.append(sub_initials)
                 finals.append(sub_finals)
@@ -257,7 +257,7 @@ def _g2p(segments):
                 assert tone in "12345"
 
                 if c:
-                    # 多音??
+                    # 多音节
                     v_rep_map = {
                         "uei": "ui",
                         "iou": "iu",
@@ -266,7 +266,7 @@ def _g2p(segments):
                     if v_without_tone in v_rep_map.keys():
                         pinyin = c + v_rep_map[v_without_tone]
                 else:
-                    # ?�音??
+                    # 单音节
                     pinyin_rep_map = {
                         "ing": "ying",
                         "i": "yi",
@@ -296,7 +296,7 @@ def _g2p(segments):
 
 
 def replace_punctuation_with_en(text):
-    text = text.replace("??, "??).replace("??, "�?)
+    text = text.replace("嗯", "恩").replace("呣", "母")
     pattern = re.compile("|".join(re.escape(p) for p in rep_map.keys()))
 
     replaced_text = pattern.sub(lambda x: rep_map[x.group()], text)
@@ -321,19 +321,19 @@ def text_normalize(text):
     for sentence in sentences:
         dest_text += replace_punctuation(sentence)
 
-    # ?�免?�复?�点引起?�参?�泄??
+    # 避免重复标点引起的参考泄露
     dest_text = replace_consecutive_punctuation(dest_text)
     return dest_text
 
 
 if __name__ == "__main__":
-    text = "?�——但??��原神》是??米哈\游自主，?�发?��?款全.?��??�世???�险游戏"
-    text = "?�呣?�～就是??��人的鼹鼠?�吧�?
-    text = "你�?"
+    text = "啊——但是《原神》是由,米哈\游自主，研发的一款全.新开放世界.冒险游戏"
+    text = "呣呣呣～就是…大人的鼹鼠党吧？"
+    text = "你好"
     text = text_normalize(text)
     print(g2p(text))
 
 
-# # 示例?�法
-# text = "这是一个示例文?�：,你�?！这???个测�?.."
-# print(g2p_paddle(text))  # 输出: 这是一个示例文?�你好这???个测�?
+# # 示例用法
+# text = "这是一个示例文本：,你好！这是一个测试..."
+# print(g2p_paddle(text))  # 输出: 这是一个示例文本你好这是一个测试

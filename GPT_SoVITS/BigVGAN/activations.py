@@ -50,7 +50,7 @@ class Snake(nn.Module):
         """
         Forward pass of the function.
         Applies the function to the input elementwise.
-        Snake ?? x + 1/a * sin^2 (xa)
+        Snake ∶= x + 1/a * sin^2 (xa)
         """
         alpha = self.alpha.unsqueeze(0).unsqueeze(-1)  # Line up with x to [B, C, T]
         if self.alpha_logscale:
@@ -110,7 +110,7 @@ class SnakeBeta(nn.Module):
         """
         Forward pass of the function.
         Applies the function to the input elementwise.
-        SnakeBeta ?? x + 1/b * sin^2 (xa)
+        SnakeBeta ∶= x + 1/b * sin^2 (xa)
         """
         alpha = self.alpha.unsqueeze(0).unsqueeze(-1)  # Line up with x to [B, C, T]
         beta = self.beta.unsqueeze(0).unsqueeze(-1)

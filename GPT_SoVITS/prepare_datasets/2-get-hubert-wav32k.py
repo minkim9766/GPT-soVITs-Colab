@@ -86,7 +86,7 @@ def name2go(wav_name, wav_path):
         return
     tmp_audio32 = (tmp_audio / tmp_max * (maxx * alpha * 32768)) + ((1 - alpha) * 32768) * tmp_audio
     tmp_audio32b = (tmp_audio / tmp_max * (maxx * alpha * 1145.14)) + ((1 - alpha) * 1145.14) * tmp_audio
-    tmp_audio = librosa.resample(tmp_audio32b, orig_sr=32000, target_sr=16000)  # 不是?�采?�问�?
+    tmp_audio = librosa.resample(tmp_audio32b, orig_sr=32000, target_sr=16000)  # 不是重采样问题
     tensor_wav16 = torch.from_numpy(tmp_audio)
     if is_half == True:
         tensor_wav16 = tensor_wav16.half().to(device)

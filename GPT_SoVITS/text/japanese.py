@@ -8,7 +8,7 @@ try:
 
     current_file_path = os.path.dirname(__file__)
 
-    # ?��?win下无法�??�模??
+    # 防止win下无法读取模型
     if os.name == "nt":
         python_dir = os.getcwd()
         OPEN_JTALK_DICT_DIR = pyopenjtalk.OPEN_JTALK_DICT_DIR.decode("utf-8")
@@ -57,7 +57,7 @@ try:
     USERDIC_CSV_PATH = os.path.join(current_file_path, "ja_userdic", "userdict.csv")
     USERDIC_BIN_PATH = os.path.join(current_file_path, "ja_userdic", "user.dict")
     USERDIC_HASH_PATH = os.path.join(current_file_path, "ja_userdic", "userdict.md5")
-    # 如果没有?�户词典，就?�成一个；如果?�，就�??�md5，如?�不一?�，就重?�生??
+    # 如果没有用户词典，就生成一个；如果有，就检查md5，如果不一样，就重新生成
     if os.path.exists(USERDIC_CSV_PATH):
         if (
             not os.path.exists(USERDIC_BIN_PATH)
@@ -90,17 +90,17 @@ _japanese_marks = re.compile(
 )
 
 # List of (symbol, Japanese) pairs for marks:
-_symbols_to_japanese = [(re.compile("%s" % x[0]), x[1]) for x in [("�?, "?�ー?�ン??)]]
+_symbols_to_japanese = [(re.compile("%s" % x[0]), x[1]) for x in [("％", "パーセント")]]
 
 
 # List of (consonant, sokuon) pairs:
 _real_sokuon = [
     (re.compile("%s" % x[0]), x[1])
     for x in [
-        (r"Q([?�↓]*[kg])", r"k#\1"),
-        (r"Q([?�↓]*[tdjʧ])", r"t#\1"),
-        (r"Q([?�↓]*[s?])", r"s\1"),
-        (r"Q([?�↓]*[pb])", r"p#\1"),
+        (r"Q([↑↓]*[kg])", r"k#\1"),
+        (r"Q([↑↓]*[tdjʧ])", r"t#\1"),
+        (r"Q([↑↓]*[sʃ])", r"s\1"),
+        (r"Q([↑↓]*[pb])", r"p#\1"),
     ]
 ]
 
@@ -108,26 +108,26 @@ _real_sokuon = [
 _real_hatsuon = [
     (re.compile("%s" % x[0]), x[1])
     for x in [
-        (r"N([?�↓]*[pbm])", r"m\1"),
-        (r"N([?�↓]*[ʧʥj])", r"n^\1"),
-        (r"N([?�↓]*[tdn])", r"n\1"),
-        (r"N([?�↓]*[kg])", r"ŋ\1"),
+        (r"N([↑↓]*[pbm])", r"m\1"),
+        (r"N([↑↓]*[ʧʥj])", r"n^\1"),
+        (r"N([↑↓]*[tdn])", r"n\1"),
+        (r"N([↑↓]*[kg])", r"ŋ\1"),
     ]
 ]
 
 
 def post_replace_ph(ph):
     rep_map = {
-        "�?: ",",
-        "�?: ",",
-        "�?: ",",
-        "??: ".",
-        "�?: "!",
-        "�?: "?",
+        "：": ",",
+        "；": ",",
+        "，": ",",
+        "。": ".",
+        "！": "!",
+        "？": "?",
         "\n": ".",
         "·": ",",
-        "??: ",",
-        "...": "??,
+        "、": ",",
+        "...": "…",
     }
 
     if ph in rep_map.keys():
@@ -165,7 +165,7 @@ def preprocess_jap(text, with_prosody=False):
                 text += p.split(" ")
 
         if i < len(marks):
-            if marks[i] == " ":  # ?��??�外?�UNK
+            if marks[i] == " ":  # 防止意外的UNK
                 continue
             text += [marks[i].replace(" ", "")]
     return text
@@ -174,7 +174,7 @@ def preprocess_jap(text, with_prosody=False):
 def text_normalize(text):
     # todo: jap text normalize
 
-    # ?�免?�复?�点引起?�参?�泄??
+    # 避免重复标点引起的参考泄露
     text = replace_consecutive_punctuation(text)
     return text
 
@@ -195,7 +195,7 @@ def pyopenjtalk_g2p_prosody(text, drop_unvoiced_vowels=True):
 
     Examples:
         >>> from espnet2.text.phoneme_tokenizer import pyopenjtalk_g2p_prosody
-        >>> pyopenjtalk_g2p_prosody("?�ん?�ち??�?)
+        >>> pyopenjtalk_g2p_prosody("こんにちは。")
         ['^', 'k', 'o', '[', 'N', 'n', 'i', 'ch', 'i', 'w', 'a', '$']
 
     .. _`Prosodic features control by symbols as input of sequence-to-sequence acoustic
@@ -272,5 +272,5 @@ def g2p(norm_text, with_prosody=True):
 
 
 if __name__ == "__main__":
-    phones = g2p("Hello.?�ん?�ち??��今日?�NiCe天気?�す??��tokyotower?�行?�ま?�ょ?�！")
+    phones = g2p("Hello.こんにちは！今日もNiCe天気ですね！tokyotowerに行きましょう！")
     print(phones)

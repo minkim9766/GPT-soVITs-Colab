@@ -1,4 +1,3 @@
---no-binary=opencc
 numpy<2.0
 scipy
 tensorboard

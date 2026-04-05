@@ -30,7 +30,7 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output_folder", type=str, required=True, help="Output folder to store transcriptions.")
     parser.add_argument(
         "-p", "--precision", type=str, default="float16", choices=["float16", "float32"], help="fp16 or fp32"
-    )  # 还没?�入
+    )  # 还没接入
     cmd = parser.parse_args()
     execute_denoise(
         input_folder=cmd.input_folder,

@@ -24,7 +24,7 @@ import numpy as np
 
 from .utils import tokenize_and_map
 
-ANCHOR_CHAR = "??
+ANCHOR_CHAR = "▁"
 
 
 def prepare_onnx_input(

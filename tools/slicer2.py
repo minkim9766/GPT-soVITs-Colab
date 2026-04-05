@@ -126,7 +126,7 @@ class Slicer:
             pos = rms_list[silence_start : silence_end + 1].argmin() + silence_start
             sil_tags.append((pos, total_frames + 1))
         # Apply and return slices.
-        ####?�频+起始?�间+终�??�间
+        ####音频+起始时间+终止时间
         if len(sil_tags) == 0:
             return [[waveform, 0, int(total_frames * self.hop_size)]]
         else:

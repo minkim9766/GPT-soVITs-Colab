@@ -18,7 +18,7 @@ if sys.argv[1] == "initial":
     from google.colab import runtime
     runtime.restart()
 
-else:
+elif sys.argv[1] == "install":
     # 2. Gradio frpc 파일 설정 (Linux 환경용)
     try:
         import gradio
