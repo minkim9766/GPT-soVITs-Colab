@@ -12,7 +12,7 @@ def run_command(command):
 
 try:
     with open("tracker") as tracking_file:
-        if tracking_file.readlines[0] == "1":
+        if tracking_file.readline().strip() == "1":
             pass
         else:
             raise ValueError
