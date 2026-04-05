@@ -24,9 +24,11 @@ except:
 
     print("NOTICE:Please ReLaunch this Code!")
 
-    with open("tracker", "w") as tracking_file:
-        tracking_file.write("1")
-        tracking_file.close()
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    tracker_path = os.path.join(base_dir, "tracker")
+
+    with open(tracker_path, "w") as f:
+        f.write("1")
     import os
     os.kill(os.getpid(), 9)
 
