@@ -22,7 +22,7 @@ from tools.i18n.i18n import I18nAuto, scan_language_list
 language = os.environ.get("language", "Auto")
 language = sys.argv[-1] if sys.argv[-1] in scan_language_list() else language
 i18n = I18nAuto(language=language)
-punctuation = set(["!", "?", "…", ",", ".", "-"])
+punctuation = set(["!", "?", "??, ",", ".", "-"])
 
 
 def get_first(text: str) -> str:
@@ -57,11 +57,11 @@ class TextPreprocessor:
         self.bert_lock = threading.RLock()
 
     def preprocess(self, text: str, lang: str, text_split_method: str, version: str = "v2") -> List[Dict]:
-        print(f"############ {i18n('切分文本')} ############")
+        print(f"############ {i18n('?�分?�本')} ############")
         text = self.replace_consecutive_punctuation(text)
         texts = self.pre_seg_text(text, lang, text_split_method)
         result = []
-        print(f"############ {i18n('提取文本Bert特征')} ############")
+        print(f"############ {i18n('?�取?�本Bert?�征')} ############")
         for text in tqdm(texts):
             phones, bert_features, norm_text = self.segment_and_extract_feature_for_text(text, lang, version)
             if phones is None or norm_text == "":
@@ -79,8 +79,8 @@ class TextPreprocessor:
         if len(text) == 0:
             return []
         if text[0] not in splits and len(get_first(text)) < 4:
-            text = "。" + text if lang != "en" else "." + text
-        print(i18n("实际输入的目标文本:"))
+            text = "?? + text if lang != "en" else "." + text
+        print(i18n("实际输入?�目?�文??"))
         print(text)
 
         seg_method = get_seg_method(text_split_method)
@@ -95,22 +95,22 @@ class TextPreprocessor:
         texts = []
 
         for text in _texts:
-            # 解决输入目标文本的空行导致报错的问题
+            # 解决输入??��?�本?�空行�??�报?�的??��
             if len(text.strip()) == 0:
                 continue
             if not re.sub("\W+", "", text):
-                # 检测一下，如果是纯符号，就跳过。
+                # 检测�?下，如果??���?��，就跳过??
                 continue
             if text[-1] not in splits:
-                text += "。" if lang != "en" else "."
+                text += "?? if lang != "en" else "."
 
-            # 解决句子过长导致Bert报错的问题
+            # 解决?�子过长导致Bert?�错?�问�?
             if len(text) > 510:
                 texts.extend(split_big_text(text))
             else:
                 texts.append(text)
 
-        print(i18n("实际输入的目标文本(切句后):"))
+        print(i18n("实际输入?�目?�文???�句??:"))
         print(texts)
         return texts
 
@@ -164,7 +164,7 @@ class TextPreprocessor:
                     if tmp["lang"] == "en":
                         langlist.append(tmp["lang"])
                     else:
-                        # 因无法区别中日韩文汉字,以用户输入为准
+                        # ?�无法区?�中?�韩?�汉�?以用?�输?�为??
                         langlist.append(language)
                     textlist.append(tmp["text"])
             # print(textlist)
@@ -224,7 +224,7 @@ class TextPreprocessor:
     def filter_text(self, texts):
         _text = []
         if all(text in [None, " ", "\n", ""] for text in texts):
-            raise ValueError(i18n("请输入有效文本"))
+            raise ValueError(i18n("请输?�有?�文??))
         for text in texts:
             if text in [None, " ", ""]:
                 pass

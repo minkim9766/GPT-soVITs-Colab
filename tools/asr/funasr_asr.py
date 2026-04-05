@@ -8,7 +8,7 @@ from funasr import AutoModel
 from modelscope import snapshot_download
 from tqdm import tqdm
 
-funasr_models = {}  # 存储模型避免重复加载
+funasr_models = {}  # 存储模型?�免?�复?�载
 
 
 def only_asr(input_file, language):
@@ -64,7 +64,7 @@ def create_model(language="zh"):
             punc_model=path_punc,
             punc_model_revision=punc_model_revision,
         )
-        print(f"FunASR 模型加载完成: {language.upper()}")
+        print(f"FunASR 模型?�载完成: {language.upper()}")
 
         funasr_models[language] = model
         return model
@@ -94,7 +94,7 @@ def execute_asr(input_folder, output_folder, model_size, language):
 
     with open(output_file_path, "w", encoding="utf-8") as f:
         f.write("\n".join(output))
-        print(f"ASR 任务完成->标注文件路径: {output_file_path}\n")
+        print(f"ASR 任务完成->?�注?�件�?��: {output_file_path}\n")
     return output_file_path
 
 
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-p", "--precision", type=str, default="float16", choices=["float16", "float32"], help="fp16 or fp32"
-    )  # 还没接入
+    )  # 还没?�入
     cmd = parser.parse_args()
     execute_asr(
         input_folder=cmd.input_folder,

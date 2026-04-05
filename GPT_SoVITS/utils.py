@@ -44,7 +44,7 @@ def load_checkpoint(checkpoint_path, model, optimizer=None, skip_optimizer=False
             )
         except:
             traceback.print_exc()
-            print("error, %s is not in the checkpoint" % k)  # shape不对也会，比如text_embedding当cleaner修改时
+            print("error, %s is not in the checkpoint" % k)  # shape不�?也会，比如text_embedding当cleaner�?��??
             new_state_dict[k] = v
     if hasattr(model, "module"):
         model.module.load_state_dict(new_state_dict)

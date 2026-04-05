@@ -317,7 +317,7 @@ class FFN(nn.Module):
         self.activation = activation
         self.causal = causal
 
-        # 从上下文看这里一定是 False
+        # 从上下文?�这?��?定是 False
         # if causal:
         #     self.padding = self._causal_padding
         # else:

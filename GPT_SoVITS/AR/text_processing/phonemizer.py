@@ -25,8 +25,8 @@ class GruutPhonemizer:
             r"\.": ". ",
             "!": "! ",
             r"\?": "? ",
-            "—": "—",
-            "…": "… ",
+            "??: "??,
+            "??: "??",
             "«": "«",
             "»": "»",
         }
@@ -41,12 +41,12 @@ class GruutPhonemizer:
     def _convert_punctuation(self, word: Word) -> str:
         if not word.phonemes:
             return ""
-        if word.phonemes[0] in ["‖", "|"]:
+        if word.phonemes[0] in ["??, "|"]:
             return word.text.strip()
 
         phonemes = "".join(word.phonemes)
-        # remove modifier characters ˈˌː with regex
-        phonemes = re.sub(r"[ˈˌː͡]", "", phonemes)
+        # remove modifier characters ??? with regex
+        phonemes = re.sub(r"[???͡]", "", phonemes)
         return phonemes.strip()
 
     def phonemize(self, text: str, espeak: bool = False) -> str:

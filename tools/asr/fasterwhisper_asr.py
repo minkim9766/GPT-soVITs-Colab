@@ -103,7 +103,7 @@ def download_model(model_size: str):
 
 def execute_asr(input_folder, output_folder, model_path, language, precision):
     if language == "auto":
-        language = None  # 不设置语种由模型自动输出概率最高的语种
+        language = None  # 不�?�??种由模型?�动输出概率?�高的�?��
     print("loading faster whisper model:", model_path, model_path)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = WhisperModel(model_path, device=device, compute_type=precision)
@@ -127,7 +127,7 @@ def execute_asr(input_folder, output_folder, model_path, language, precision):
             text = ""
 
             if info.language in ["zh", "yue"]:
-                print("检测为中文文本, 转 FunASR 处理")
+                print("检测为�?��?�本, �?FunASR 处理")
                 text = only_asr(file_path, language=info.language.lower())
 
             if text == "":
@@ -144,7 +144,7 @@ def execute_asr(input_folder, output_folder, model_path, language, precision):
 
     with open(output_file_path, "w", encoding="utf-8") as f:
         f.write("\n".join(output))
-        print(f"ASR 任务完成->标注文件路径: {output_file_path}\n")
+        print(f"ASR 任务完成->?�注?�件�?��: {output_file_path}\n")
     return output_file_path
 
 
