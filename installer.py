@@ -15,6 +15,10 @@ print("📦 필수 패키지 설치 중...")
 run_command(f"{sys.executable} -m pip install pydub faster-whisper librosa")
 run_command(f"{sys.executable} -m pip install --upgrade pip setuptools wheel gradio")
 
+from google.colab import runtime
+runtime.restart()
+
+
 # 2. Gradio frpc 파일 설정 (Linux 환경용)
 try:
     import gradio
