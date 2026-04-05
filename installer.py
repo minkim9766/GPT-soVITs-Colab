@@ -53,12 +53,15 @@ except ImportError:
     print("❌ Gradio가 설치되지 않았습니다.")
 
 # 3. requirements.txt 설치
-if os.path.exists("requirements.txt"):
+if os.path.exists("/content/GPT-soVITs-Colab/requirements.txt"):
     print("📋 requirements.txt 설치 중...")
     run_command(f"{sys.executable} -m pip install -r requirements.txt")
 
+import os
+os.kill(os.getpid(), 9)
+
 # 4. 모델 웨이트(Weights) 다운로드 및 정리
-target_dir = "GPT_SoVITS/pretrained_models"
+target_dir = "/content/GPT-soVITs-Colab/GPT_SoVITS/pretrained_models"
 
 # 기존 폴더 삭제 (필요 시)
 if os.path.exists(target_dir):
