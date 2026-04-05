@@ -39,5 +39,5 @@ pydantic<=2.10.6
 ctranslate2>=4.0,<5
 av>=11
 tqdm
-opencc
-opencc-python-reimplemented
+# opencc
+# opencc-python-reimplemented
