@@ -23,7 +23,8 @@ except:
     run_command(f"{sys.executable} -m pip install --upgrade pip setuptools wheel gradio")
 
     print("NOTICE:Please ReLaunch this Code!")
-    with open("tracker") as tracking_file:
+
+    with open("tracker", "w") as tracking_file:
         tracking_file.write("1")
         tracking_file.close()
     import os
