@@ -10,14 +10,24 @@ def run_command(command):
     except subprocess.CalledProcessError as e:
         print(f"오류 발생: {e}")
 
-# 1. 필수 패키지 설치
-print("📦 필수 패키지 설치 중...")
-run_command(f"{sys.executable} -m pip install pydub faster-whisper librosa")
-run_command(f"{sys.executable} -m pip install --upgrade pip setuptools wheel gradio")
+try:
+    with open("tracker") as tracking_file:
+        if tracking_file.readlines[0] == "1":
+            pass
+        else:
+            raise ValueError
+except:
+    # 1. 필수 패키지 설치
+    print("📦 필수 패키지 설치 중...")
+    run_command(f"{sys.executable} -m pip install pydub faster-whisper librosa")
+    run_command(f"{sys.executable} -m pip install --upgrade pip setuptools wheel gradio")
 
-from google.colab import runtime
-runtime.restart()
-
+    print("NOTICE:Please ReLaunch this Code!")
+    with open("tracker") as tracking_file:
+        tracking_file.write("1")
+        tracking_file.close()
+    import os
+    os.kill(os.getpid(), 9)
 
 # 2. Gradio frpc 파일 설정 (Linux 환경용)
 try:
