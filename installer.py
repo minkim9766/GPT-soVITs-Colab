@@ -43,7 +43,7 @@ elif sys.argv[1] == "install":
 # 3. requirements.txt 설치
 if os.path.exists("/content/tts/GPT-soVITs-Colab/requirements.txt"):
     print("📋 requirements.txt 설치 중...")
-    run_command(f"{sys.executable} -m pip install --target /content/drive/MyDrive/tts/GPT-SoVITs/package -r requirements.txt")
+    run_command(f"{sys.executable} -m pip install --target /content/drive/MyDrive/tts/GPT-SoVITs/package -r requirements.txt --force-reinstall")
 
 # 4. 모델 웨이트(Weights) 다운로드 및 정리
 target_dir = "/content/tts/GPT-soVITs-Colab/GPT_SoVITS/pretrained_models"
