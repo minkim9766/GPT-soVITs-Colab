@@ -10,13 +10,7 @@ def run_command(command):
     except subprocess.CalledProcessError as e:
         print(f"오류 발생: {e}")
 
-try:
-    with open("tracker") as tracking_file:
-        if tracking_file.readline().strip() == "1":
-            pass
-        else:
-            raise ValueError
-except:
+if sys.argv[1] == "initial":
     # 1. 필수 패키지 설치
     print("📦 필수 패키지 설치 중...")
     run_command(f"{sys.executable} -m pip install pydub faster-whisper librosa")
@@ -24,16 +18,11 @@ except:
 
     print("NOTICE:Please ReLaunch this Code!")
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    tracker_path = os.path.join(base_dir, "tracker")
-
-    with open(tracker_path, "w") as f:
-        f.write("1")
     import os
     os.kill(os.getpid(), 9)
 
 # 2. Gradio frpc 파일 설정 (Linux 환경용)
-try:
+elif sys.argv[1] == "install":
     import gradio
     gradio_path = os.path.dirname(gradio.__file__)
     # 시스템이 리눅스인 경우에만 frpc 다운로드 진행
@@ -49,16 +38,11 @@ try:
         else:
             run_command(f"chmod +x {frpc_path}")
             print("✅ frpc 파일이 이미 존재합니다. 권한 재설정 완료.")
-except ImportError:
-    print("❌ Gradio가 설치되지 않았습니다.")
 
 # 3. requirements.txt 설치
 if os.path.exists("/content/GPT-soVITs-Colab/requirements.txt"):
     print("📋 requirements.txt 설치 중...")
     run_command(f"{sys.executable} -m pip install -r requirements.txt")
-
-import os
-os.kill(os.getpid(), 9)
 
 # 4. 모델 웨이트(Weights) 다운로드 및 정리
 target_dir = "/content/GPT-soVITs-Colab/GPT_SoVITS/pretrained_models"
