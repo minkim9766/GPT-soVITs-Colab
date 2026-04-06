@@ -1,4 +1,13 @@
-numpy
+# --- Colab 호환성을 위한 핵심 의존성 고정 ---
+numpy>=1.26.0,<2.2.0
+protobuf>=3.20.3,<6.0.0dev
+fsspec==2025.3.0
+requests==2.32.4
+decorator<5.0
+rich<14
+jedi>=0.16
+
+# --- 메인 프로젝트 패키지 ---
 scipy
 tensorboard
 librosa
@@ -6,8 +15,6 @@ numba
 pytorch-lightning>=2.4
 gradio
 ffmpeg-python
-onnxruntime; platform_machine == "aarch64" or platform_machine == "arm64"
-onnxruntime-gpu; platform_machine == "x86_64" or platform_machine == "AMD64"
 tqdm
 funasr
 cn2an
@@ -37,4 +44,7 @@ torchmetrics
 pydantic
 ctranslate2>=4.0
 av>=11
-tqdm
+
+# --- 플랫폼별 ONNX 설정 ---
+onnxruntime; platform_machine == "aarch64" or platform_machine == "arm64"
+onnxruntime-gpu; platform_machine == "x86_64" or platform_machine == "AMD64"
