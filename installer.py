@@ -33,7 +33,7 @@ elif sys.argv[1] == "install":
         if not os.path.exists(frpc_path):
             print("🌐 frpc 파일이 없어 다운로드를 시작합니다...")
             # 실제 HuggingFace 직링크를 사용해야 합니다. (아래는 예시 경로)
-            run_command(f"wget -O {frpc_path} https://huggingface.co/spaces/gradio/frpc/resolve/main/frpc_linux_amd64_v0.2")
+            run_command(f"wget -O {frpc_path} https://github.com/fatedier/frp/releases/download/v0.68.0/frp_0.68.0_linux_amd64.tar.gz")
             run_command(f"chmod +x {frpc_path}")
             print("✅ frpc 설치 및 권한 설정 완료.")
         else:
