@@ -13,8 +13,9 @@ def run_command(command):
 if sys.argv[1] == "initial":
     # 1. 필수 패키지 설치
     print("📦 필수 패키지 설치 중...")
-    run_command(f"{sys.executable} -m pip install --target=/content/drive/MyDrive/tts/GPT-SoVITs/package pydub faster-whisper librosa")
-    run_command(f"{sys.executable} -m pip install --target=/content/drive/MyDrive/tts/GPT-SoVITs/package --upgrade pip setuptools wheel gradio")
+    run_command(f"{sys.executable} -m pip install --target /content/drive/MyDrive/tts/GPT-SoVITs/package pydub faster-whisper librosa")
+    run_command(f"{sys.executable} -m pip install --target /content/drive/MyDrive/tts/GPT-SoVITs/package --upgrade pip setuptools wheel gradio")
+    run_command(f"{sys.executable} -m pip install --target /content/drive/MyDrive/tts/GPT-SoVITs/package opencc-python-reimplemented opencc")
 
     print("NOTICE:Please ReLaunch this Code!")
 
@@ -42,7 +43,7 @@ elif sys.argv[1] == "install":
 # 3. requirements.txt 설치
 if os.path.exists("/content/tts/GPT-soVITs-Colab/requirements.txt"):
     print("📋 requirements.txt 설치 중...")
-    run_command(f"{sys.executable} -m pip install --target=/content/drive/MyDrive/tts/GPT-SoVITs/package -r requirements.txt")
+    run_command(f"{sys.executable} -m pip install --target /content/drive/MyDrive/tts/GPT-SoVITs/package -r requirements.txt")
 
 # 4. 모델 웨이트(Weights) 다운로드 및 정리
 target_dir = "/content/tts/GPT-soVITs-Colab/GPT_SoVITS/pretrained_models"
