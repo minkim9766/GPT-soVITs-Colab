@@ -60,5 +60,6 @@ elif sys.argv[1] == "install":
     run_command("git lfs install")
     # run_command(f"git clone https://huggingface.co/minseo9766/GPT-SoVITS-Colab {target_dir}")
     run_command(f"git clone https://huggingface.co/lj1995/GPT-SoVITS {target_dir}")
+    run_command("pip install ffmpeg-python ko_pron pypinyin funasr modelscope g2pk2 x_transformers pytorch-lightning torchmetrics")
 
     print("\n✨ 모든 설정이 완료되었습니다!")
