@@ -12,8 +12,8 @@ def run_command(command):
 
 if sys.argv[1] == "initial":
     print("📦 필수 패키지 설치 중...")
-    run_command(f"{sys.executable} -m pip install {sys.argv[2]} pydub faster-whisper librosa")
-    run_command(f"{sys.executable} -m pip install --upgrade {sys.argv[2]} pip setuptools wheel gradio")
+    run_command(f"{sys.executable} -m pip install {sys.argv[2] if sys.argv[2] != "none" else ''} pydub faster-whisper librosa")
+    run_command(f"{sys.executable} -m pip install --upgrade {sys.argv[2] if sys.argv[2] != "none" else ''} pip setuptools wheel gradio")
 
     import os
     os.kill(os.getpid(), 9)
@@ -40,16 +40,16 @@ elif sys.argv[1] == "install":
         print("❌ Gradio가 설치되지 않았습니다.")
 
     # 3. requirements.txt 설치
-    if os.path.exists(f"/content/tts/{sys.argv[3]}GPT-soVITs-Colab/requirements.txt"):
+    if os.path.exists(f"/content/tts{sys.argv[3] if sys.argv[3] != "none" else '/'}/GPT-soVITs-Colab/requirements.txt"):
         print("📋 requirements.txt 설치 중...")
-        run_command(f"{sys.executable} -m pip install {sys.argv[2]} -r requirements.txt")
+        run_command(f"{sys.executable} -m pip install {sys.argv[2] if sys.argv[2] != "none" else ''} -r requirements.txt")
 
     print("추가 설치 중")
-    run_command(f"{sys.executable} -m pip install {sys.argv[2]} opencc-python-reimplemented")
-    run_command(f"{sys.executable} -m pip install {sys.argv[2]} opencc")
+    run_command(f"{sys.executable} -m pip install {sys.argv[2] if sys.argv[2] != "none" else ''} opencc-python-reimplemented")
+    run_command(f"{sys.executable} -m pip install {sys.argv[2] if sys.argv[2] != "none" else ''} opencc")
 
     # 4. 모델 웨이트(Weights) 다운로드 및 정리
-    target_dir = f"/content/{sys.argv[3]}GPT-soVITs-Colab/GPT_SoVITS/pretrained_models"
+    target_dir = f"/content{sys.argv[3] if sys.argv[3] != "none" else '/'}/GPT-soVITs-Colab/GPT_SoVITS/pretrained_models"
 
     # 기존 폴더 삭제 (필요 시)
     if os.path.exists(target_dir):
