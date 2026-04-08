@@ -42,3 +42,6 @@ av>=11
 ffmpeg-python
 faster-whisper
 modelscope
+funasr
+pypinyin
+ko_pron
