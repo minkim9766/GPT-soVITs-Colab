@@ -45,3 +45,6 @@ modelscope
 funasr
 pypinyin
 ko_pron
+fast_langdetect
+split-lang
+cn2an
