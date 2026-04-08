@@ -62,4 +62,7 @@ elif sys.argv[1] == "install":
     run_command(f"git clone https://huggingface.co/lj1995/GPT-SoVITS {target_dir}")
     run_command("pip install ffmpeg-python ko_pron pypinyin funasr modelscope g2pk2 x_transformers pytorch-lightning torchmetrics")
 
+    print(" 파일 패치중...")
+    run_command("cp patch_file_pkg_resources__init__.py /usr/lib/python3/dist-packages/pkg_resources/__init__.py")
+
     print("\n✨ 모든 설정이 완료되었습니다!")
