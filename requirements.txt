@@ -39,3 +39,6 @@ ctranslate2
 av>=11
 # opencc
 # opencc-python-reimplemented
+ffmpeg-python
+faster-whisper
+modelscope
